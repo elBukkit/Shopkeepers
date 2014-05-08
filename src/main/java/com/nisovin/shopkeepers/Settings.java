@@ -47,6 +47,7 @@ public class Settings {
 	public static boolean enableSignShops = true;
 	public static boolean enableWitchShops = true;
 	public static boolean enableCreeperShops = false;
+    public static boolean enableCitizenShops = false;
 
 	public static String signShopFirstLine = "[SHOP]";
 	public static boolean showNameplates = true;

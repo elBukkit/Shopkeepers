@@ -160,6 +160,9 @@ public class ShopkeepersPlugin extends JavaPlugin {
 		if (Settings.enableCreeperShops) {
 			pm.registerEvents(new CreeperListener(this), this);
 		}
+        if (Settings.enableCitizenShops) {
+            pm.registerEvents(new NPCListener(this), this);
+        }
 		if (Settings.blockVillagerSpawns) {
 			pm.registerEvents(new BlockSpawnListener(), this);
 		}
@@ -445,7 +448,9 @@ public class ShopkeepersPlugin extends JavaPlugin {
 								shopObjType = ShopObjectType.WITCH;
 							} else if (args[0].toLowerCase().equals("creeper") && Settings.enableCreeperShops) {
 								shopObjType = ShopObjectType.CREEPER;
-							}
+							} else if (args[0].toLowerCase().equals("npc") && Settings.enableCitizenShops) {
+                                shopObjType = ShopObjectType.NPC;
+                            }
 						}
 						if (args.length >= 2) {
 							if (args[1].equalsIgnoreCase("villager") && Settings.enableVillagerShops) {
@@ -456,7 +461,9 @@ public class ShopkeepersPlugin extends JavaPlugin {
 								shopObjType = ShopObjectType.WITCH;
 							} else if (args[1].equalsIgnoreCase("creeper") && Settings.enableCreeperShops) {
 								shopObjType = ShopObjectType.CREEPER;
-							}
+							} else if (args[1].equalsIgnoreCase("npc") && Settings.enableCitizenShops) {
+                                shopObjType = ShopObjectType.NPC;
+                            }
 						}
 						if (shopType != null && !shopType.hasPermission(player)) {
 							shopType = null;
@@ -483,8 +490,11 @@ public class ShopkeepersPlugin extends JavaPlugin {
 							shopObjType = ShopObjectType.WITCH;
 						} else if (args[0].equals("creeper") && Settings.enableCreeperShops) {
 							shopObjType = ShopObjectType.CREEPER;
-						}
+						} else if (args[0].equals("npc") && Settings.enableCitizenShops) {
+                            shopObjType = ShopObjectType.NPC;
+                        }
 					}
+
 					Shopkeeper shopkeeper = createNewAdminShopkeeper(loc, shopObjType);
 					if (shopkeeper != null) {
 						sendMessage(player, Settings.msgAdminShopCreated);
@@ -533,9 +543,9 @@ public class ShopkeepersPlugin extends JavaPlugin {
 	 *            the backing chest for the shop
 	 * @param location
 	 *            the block location the shopkeeper should spawn
-	 * @param profession
+	 * @param shopType
 	 *            the shopkeeper's profession, a number from 0 to 5
-	 * @param type
+	 * @param shopObjectType
 	 *            the player shop type (0=normal, 1=book, 2=buy)
 	 * @return the shopkeeper created
 	 */

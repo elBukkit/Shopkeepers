@@ -3,6 +3,7 @@ version: 1.18
 description: Custom villager shopkeepers
 author: nisovin
 website: http://dev.bukkit.org/server-mods/shopkeepers/
+softdepend: [Citizens]
 
 main: com.nisovin.shopkeepers.ShopkeepersPlugin
 

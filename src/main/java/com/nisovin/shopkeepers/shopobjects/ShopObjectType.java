@@ -18,9 +18,11 @@ public enum ShopObjectType {
 
 	WITCH(3, "witch"),
 
-	CREEPER(4, "creeper");
+	CREEPER(4, "creeper"),
 
-	private static final int MAX_ID = 4;
+    NPC(5, "npc");
+
+	private static final int MAX_ID = 5;
 
 	private final int id;
 	private final String permission;
@@ -53,6 +55,8 @@ public enum ShopObjectType {
 			return new WitchShop(shopkeeper);
 		case CREEPER:
 			return new CreeperShop(shopkeeper);
+        case NPC:
+            return new NPCShop(shopkeeper);
 
 		default:
 			return new VillagerShop(shopkeeper);
@@ -64,6 +68,7 @@ public enum ShopObjectType {
 		case VILLAGER:
 		case WITCH:
 		case CREEPER:
+        case NPC:
 			return true;
 
 		default:
@@ -81,7 +86,9 @@ public enum ShopObjectType {
 				return ShopObjectType.WITCH;
 			} else if (objectTypeName.equals("creeper")) {
 				return ShopObjectType.CREEPER;
-			}
+			} else if (objectTypeName.equals("npc")) {
+                return ShopObjectType.NPC;
+            }
 		}
 		return ShopObjectType.VILLAGER;
 	}
@@ -112,6 +119,7 @@ public enum ShopObjectType {
 				else if (next == WITCH && !Settings.enableWitchShops) continue;
 				else if (next == SIGN && !Settings.enableSignShops) continue;
 				else if (next == CREEPER && !Settings.enableCreeperShops) continue;
+                else if (next == NPC && !Settings.enableCitizenShops) continue;
 				return next;
 			}
 		}

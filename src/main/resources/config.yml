@@ -33,6 +33,7 @@ deleting-player-shop-returns-egg: false
 enable-villager-shops: true
 enable-sign-shops: true
 enable-witch-shops: true
+enable-citizen-shops: false
 enable-creeper-shops: false
 
 sign-shop-first-line: "[SHOP]"
