@@ -1,6 +1,5 @@
 package com.nisovin.shopkeepers;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -24,8 +23,6 @@ public class NPCListener implements Listener {
 	@EventHandler(priority=EventPriority.LOW)
 	void onEntityInteract(PlayerInteractEntityEvent event) {
         Entity rightClicked = event.getRightClicked();
-
-        Bukkit.getLogger().info("Clicked: " + event.getRightClicked().getType() + ": " + rightClicked.hasMetadata("NPC"));
 
 	    if (rightClicked != null && rightClicked instanceof LivingEntity && rightClicked.hasMetadata("NPC")) {
             LivingEntity entity = (LivingEntity)event.getRightClicked();
