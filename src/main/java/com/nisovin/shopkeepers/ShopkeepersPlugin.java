@@ -167,6 +167,7 @@ public class ShopkeepersPlugin extends JavaPlugin {
                     warning("Citizens Shops enabled, but Citizens plugin not found.");
                     Settings.enableCitizenShops = false;
                 } else {
+                    getLogger().info("Citizens found, enabling NPC shopkeepers");
                     NPCShopkeeperTrait.registerTrait();
                     pm.registerEvents(new NPCListener(this), this);
                 }
@@ -532,7 +533,7 @@ public class ShopkeepersPlugin extends JavaPlugin {
 	 * 
 	 * @param location
 	 *            the block location the shopkeeper should spawn
-	 * @param profession
+	 * @param shopObjectType
 	 *            the shopkeeper's profession, a number from 0 to 5
 	 * @return the shopkeeper created
 	 */
