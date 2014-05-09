@@ -2,6 +2,7 @@ package com.nisovin.shopkeepers.shopobjects;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
 import com.nisovin.shopkeepers.Shopkeeper;
@@ -22,6 +23,7 @@ public abstract class ShopObject {
 	public abstract boolean needsSpawned();
 
 	public abstract boolean spawn();
+    public abstract boolean attach(LivingEntity entity);
 
 	public abstract boolean isActive();
 

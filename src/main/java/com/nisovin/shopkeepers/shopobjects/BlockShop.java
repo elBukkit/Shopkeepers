@@ -8,6 +8,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
 import com.nisovin.shopkeepers.Settings;
@@ -33,6 +34,11 @@ public class BlockShop extends ShopObject {
 	public boolean needsSpawned() {
 		return false;
 	}
+
+    @Override
+    public boolean attach(LivingEntity entity) {
+        return false;
+    }
 
 	@Override
 	public boolean spawn() {

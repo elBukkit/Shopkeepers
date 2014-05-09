@@ -72,6 +72,17 @@ public abstract class LivingEntityShop extends ShopObject {
 		return false;
 	}
 
+    @Override
+    public boolean attach(LivingEntity entity) {
+        if (this.isActive()) {
+            despawn();
+        }
+
+        this.entity = entity;
+        this.uuid = entity.getUniqueId().toString();
+        return true;
+    }
+
 	@Override
 	public boolean spawn() {
 		// check if out current old entity is still valid:

@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -110,6 +111,16 @@ public abstract class Shopkeeper {
 	public boolean spawn() {
 		return shopObject.spawn();
 	}
+
+    /**
+     * Attaches to an existing Entity.
+     *
+     * @param entity
+     *   The entity to attach to, this is only valid for some shop types
+     */
+    public boolean attach(LivingEntity entity) {
+        return shopObject.attach(entity);
+    }
 
 	/**
 	 * Checks if the shopkeeper is active (is alive in the world).

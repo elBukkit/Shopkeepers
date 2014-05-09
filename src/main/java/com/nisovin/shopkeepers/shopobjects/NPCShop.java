@@ -52,8 +52,15 @@ public class NPCShop extends ShopObject {
     }
 
     @Override
+    public boolean attach(LivingEntity entity) {
+        NPC npc = CitizensAPI.getNPCRegistry().getNPC(entity);
+        if (npc == null) return false;
+        this.npcId = npc.getId();
+        return true;
+    }
+
+    @Override
     public boolean spawn() {
-        Bukkit.getLogger().info(" Spawning NPC");
         checkNPC();
         NPC npc = getNPC();
         if (npc != null && !npc.isSpawned()) {
@@ -124,17 +131,14 @@ public class NPCShop extends ShopObject {
             World world = Bukkit.getWorld(worldName);
             NPC npc = getNPC();
 
-            Bukkit.getLogger().info("Getting NPC");
             if (npc == null) {
                 return true;
             }
-            Bukkit.getLogger().info("Checking location");
             Location currentLocation = npc.getStoredLocation();
             float yaw = currentLocation == null ? 0 : currentLocation.getYaw();
             float pitch = currentLocation == null ? 0 : currentLocation.getPitch();
             Location loc = new Location(world, x + .5, y, z + .5, yaw, pitch);
             if (currentLocation == null || currentLocation.distanceSquared(loc) > .4) {
-                Bukkit.getLogger().info("Teleporting NPC");
                 npc.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 ShopkeepersPlugin.debug("Shopkeeper NPC (" + worldName + "," + x + "," + y + "," + z + ") out of place, teleported back");
             }

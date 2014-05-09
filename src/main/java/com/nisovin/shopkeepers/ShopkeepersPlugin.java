@@ -161,7 +161,19 @@ public class ShopkeepersPlugin extends JavaPlugin {
 			pm.registerEvents(new CreeperListener(this), this);
 		}
         if (Settings.enableCitizenShops) {
-            pm.registerEvents(new NPCListener(this), this);
+            try {
+                Plugin plugin = pm.getPlugin("Citizens");
+                if (plugin == null) {
+                    warning("Citizens Shops enabled, but Citizens plugin not found.");
+                    Settings.enableCitizenShops = false;
+                } else {
+                    NPCShopkeeperTrait.registerTrait();
+                    pm.registerEvents(new NPCListener(this), this);
+                }
+            } catch (Throwable ex) {
+
+            }
+
         }
 		if (Settings.blockVillagerSpawns) {
 			pm.registerEvents(new BlockSpawnListener(), this);
@@ -533,6 +545,27 @@ public class ShopkeepersPlugin extends JavaPlugin {
 
 		return shopkeeper;
 	}
+
+    /**
+     * Creates a new admin shopkeeper and spawns it into the world.
+     *
+     * @param location
+     *            the block location the shopkeeper should spawn
+     * @param shopObjectType
+     *           The type of shop
+     * @param entity
+     *           The entity to use for backing the shop, only applies to some shop types
+     * @return the shopkeeper created
+     */
+    public Shopkeeper createNewAdminShopkeeper(Location location, ShopObjectType shopObjectType, LivingEntity entity) {
+        // create the shopkeeper (and spawn it)
+        Shopkeeper shopkeeper = ShopkeeperType.ADMIN.createShopkeeper(null, null, location, shopObjectType);
+        shopkeeper.attach(entity);
+        activeShopkeepers.put(shopkeeper.getId(), shopkeeper);
+        addShopkeeper(shopkeeper);
+
+        return shopkeeper;
+    }
 
 	/**
 	 * Creates a new player-based shopkeeper and spawns it into the world.
