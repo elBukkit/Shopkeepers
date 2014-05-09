@@ -665,7 +665,18 @@ public class ShopkeepersPlugin extends JavaPlugin {
 		return activeShopkeepers.get("entity" + entityId);
 	}
 
-	/**
+    /**
+     * Gets the shopkeeper by the internal Shopkeeper id.
+     *
+     * @param shopkeeperId
+     *            the id of the shopkeeper
+     * @return the Shopkeeper, or null if no shopkeeper with the given id is registered
+     */
+    public Shopkeeper getShopkeeperById(String shopkeeperId) {
+        return activeShopkeepers.get(shopkeeperId);
+    }
+
+    /**
 	 * Gets all shopkeepers from a given chunk. Returns null if there are no shopkeepers in that chunk.
 	 * 
 	 * @param world
