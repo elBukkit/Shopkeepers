@@ -35,9 +35,14 @@ public class NPCShopkeeperTrait extends Trait {
     @Override
     public void onRemove() {
         if (shopkeeperId != null) {
-            Shopkeeper shopkeeper = ShopkeepersPlugin.getInstance().getShopkeeperById(shopkeeperId);
-            shopkeeper.remove();
-            shopkeeperId = null;
+            ShopkeepersPlugin sk = ShopkeepersPlugin.getInstance();
+            if (sk != null) {
+                Shopkeeper shopkeeper = sk.getShopkeeperById(shopkeeperId);
+                if (shopkeeper != null) {
+                    shopkeeper.remove();
+                }
+                shopkeeperId = null;
+            }
         }
     }
 
