@@ -41,6 +41,7 @@ public class NPCShop extends ShopObject {
 
     @Override
     public void save(ConfigurationSection config) {
+        config.set("object", "npc");
         if (npcId != null) {
             config.set("npcId", this.npcId);
         }
