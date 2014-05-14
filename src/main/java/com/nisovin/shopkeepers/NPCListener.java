@@ -1,5 +1,7 @@
 package com.nisovin.shopkeepers;
 
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -25,10 +27,8 @@ public class NPCListener implements Listener {
         Entity rightClicked = event.getRightClicked();
 
 	    if (rightClicked != null && rightClicked instanceof LivingEntity && rightClicked.hasMetadata("NPC")) {
-            LivingEntity entity = (LivingEntity)event.getRightClicked();
-			ShopkeepersPlugin.debug("Player " + event.getPlayer().getName() + " is interacting with NPC at " + entity.getLocation());
-			Shopkeeper shopkeeper = plugin.activeShopkeepers.get("NPC" + entity.getEntityId());
-
+            NPC npc = CitizensAPI.getNPCRegistry().getNPC(rightClicked);
+			Shopkeeper shopkeeper = plugin.activeShopkeepers.get("NPC-" + npc.getId());
 			if (event.isCancelled()) {
 				ShopkeepersPlugin.debug("  NPC interaction, but already cancelled");
 			} else if (shopkeeper != null) {

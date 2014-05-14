@@ -27,13 +27,23 @@ public class NPCShop extends ShopObject {
         if (npcId != null) return;
 
         NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.VILLAGER, "Shopkeeper");
-        npcId = npc == null ? null : npc.getId();
+        if (npc != null) {
+            npcId = npc.getId();
+            String worldName = shopkeeper.getWorldName();
+            int x = shopkeeper.getX();
+            int y = shopkeeper.getY();
+            int z = shopkeeper.getZ();
+            Location loc = new Location(Bukkit.getWorld(worldName), x, y, z);
+            npc.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
+        } else {
+            npcId = null;
+        }
     }
 
     @Override
     public void load(ConfigurationSection config) {
-        if (config.contains("npcid")) {
-            npcId = config.getInt("npcid");
+        if (config.contains("npcId")) {
+            npcId = config.getInt("npcId");
         } else {
             checkNPC();
         }
@@ -49,7 +59,7 @@ public class NPCShop extends ShopObject {
 
     @Override
     public boolean needsSpawned() {
-        return true;
+        return false;
     }
 
     @Override
@@ -62,20 +72,7 @@ public class NPCShop extends ShopObject {
 
     @Override
     public boolean spawn() {
-        checkNPC();
-        NPC npc = getNPC();
-        if (npc != null && !npc.isSpawned()) {
-            String worldName = shopkeeper.getWorldName();
-            int x = shopkeeper.getX();
-            int y = shopkeeper.getY();
-            int z = shopkeeper.getZ();
-            World world = Bukkit.getWorld(worldName);
-
-            Location loc = new Location(world, x + .5, y, z + .5, 0, 0);
-            npc.spawn(loc);
-        }
-        check();
-        return isActive();
+        return true;
     }
 
     @Override
@@ -85,8 +82,7 @@ public class NPCShop extends ShopObject {
 
     @Override
     public String getId() {
-        LivingEntity entity = getLivingEntity();
-        return entity == null ? "NPC" : "NPC" + entity.getEntityId();
+        return npcId == null ? "NPC" : "NPC-" + npcId;
     }
 
     public NPC getNPC() {
@@ -149,8 +145,6 @@ public class NPCShop extends ShopObject {
 
     @Override
     public void despawn() {
-        NPC npc = getNPC();
-        npc.despawn();
     }
 
     @Override
