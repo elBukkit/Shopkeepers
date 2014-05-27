@@ -80,6 +80,19 @@ public abstract class Shopkeeper {
 		shopObject.save(config);
 	}
 
+    /**
+     * Sets the location of this Shopkeeper. The shopkeeper will not actually
+     * move until the next time teleport() is called.
+     *
+     * @param location The new stored location of this shopkeeper.
+     */
+    public void setLocation(Location location) {
+        x = location.getBlockX();
+        y = location.getBlockY();
+        z = location.getBlockZ();
+        worldName = location.getWorld().getName();
+    }
+
 	/**
 	 * Gets the type of this shopkeeper (admin, normal player, book player, or buying player).
 	 * 

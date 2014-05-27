@@ -121,26 +121,26 @@ public class NPCShop extends ShopObject {
         int y = shopkeeper.getY();
         int z = shopkeeper.getZ();
 
-        if (!this.isActive()) {
-            // Not going to force Citizens creation, this seems like it could go really wrong.
-            return true;
-        } else {
+        if (this.isActive()) {
             World world = Bukkit.getWorld(worldName);
             NPC npc = getNPC();
 
-            if (npc == null) {
-                return true;
+            // Not going to force Citizens creation, this seems like it could go really wrong.
+            if (npc != null) {
+                Location currentLocation = npc.getStoredLocation();
+                Location loc = new Location(world, x + .5, y, z + .5);
+                if (currentLocation == null) {
+                    npc.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
+                    ShopkeepersPlugin.debug("Shopkeeper NPC (" + worldName + "," + x + "," + y + "," + z + ") had no location, teleported");
+                } else if (currentLocation.distanceSquared(loc) > 1) {
+                    shopkeeper.setLocation(currentLocation);
+                    ShopkeepersPlugin.debug("Shopkeeper NPC (" + worldName + "," + x + "," + y + "," + z + ") out of place, re-indexing");
+                    return true;
+                }
             }
-            Location currentLocation = npc.getStoredLocation();
-            float yaw = currentLocation == null ? 0 : currentLocation.getYaw();
-            float pitch = currentLocation == null ? 0 : currentLocation.getPitch();
-            Location loc = new Location(world, x + .5, y, z + .5, yaw, pitch);
-            if (currentLocation == null || currentLocation.distanceSquared(loc) > .4) {
-                npc.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
-                ShopkeepersPlugin.debug("Shopkeeper NPC (" + worldName + "," + x + "," + y + "," + z + ") out of place, teleported back");
-            }
-            return false;
         }
+
+        return false;
     }
 
     @Override
