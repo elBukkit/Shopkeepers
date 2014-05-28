@@ -132,7 +132,7 @@ public class NPCShop extends ShopObject {
                 if (currentLocation == null) {
                     npc.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
                     ShopkeepersPlugin.debug("Shopkeeper NPC (" + worldName + "," + x + "," + y + "," + z + ") had no location, teleported");
-                } else if (currentLocation.distanceSquared(loc) > 1) {
+                } else if (!currentLocation.getWorld().equals(loc.getWorld()) || currentLocation.distanceSquared(loc) > 1) {
                     shopkeeper.setLocation(currentLocation);
                     ShopkeepersPlugin.debug("Shopkeeper NPC (" + worldName + "," + x + "," + y + "," + z + ") out of place, re-indexing");
                     return true;
